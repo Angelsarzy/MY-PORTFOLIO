@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ndubuisi Truth Tonna - Frontend Developer Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0a0a0a;
+            color: #e0e0e0;
+        }
+        h1, h2, h3 {
+            font-family: 'Orbitron', sans-serif;
+        }
+        .neon-text {
+            text-shadow: 0 0 5px #00ffff, 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff;
+        }
+        .neon-border {
+            box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, #0a0a0a, #1a1a1a);
+        }
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
+            opacity: 0.5;
+        }
+        @keyframes float {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0); }
+        }
+        /* Add more particles via JS */
+    </style>
+</head>
+<body class="min-h-screen gradient-bg overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-black bg-opacity-80 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold neon-text">NTT</a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="#home" class="hover:neon-text px-3 py-2 rounded-md text-sm font-medium">Home</a>
+                        <a href="#about" class="hover:neon-text px-3 py-2 rounded-md text-sm font-medium">About</a>
+                        <a href="#skills" class="hover:neon-text px-3 py-2 rounded-md text-sm font-medium">Skills</a>
+                        <a href="#projects" class="hover:neon-text px-3 py-2 rounded-md text-sm font-medium">Projects</a>
+                        <a href="#contact" class="hover:neon-text px-3 py-2 rounded-md text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Hamburger icon -->
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="hover:neon-text block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="hover:neon-text block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#skills" class="hover:neon-text block px-3 py-2 rounded-md text-base font-medium">Skills</a>
+                <a href="#projects" class="hover:neon-text block px-3 py-2 rounded-md text-base font-medium">Projects</a>
+                <a href="#contact" class="hover:neon-text block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden">
+        <div id="particles" class="absolute inset-0"></div>
+        <div class="text-center z-10">
+            <h1 class="text-5xl md:text-7xl font-bold neon-text mb-4">Ndubuisi Truth Tonna</h1>
+            <p class="text-2xl md:text-4xl text-gray-300 mb-8">Frontend Developer</p>
+            <a href="#contact" class="bg-transparent border-2 border-cyan-400 text-cyan-400 px-8 py-3 rounded-full font-bold hover:neon-border transition">Get in Touch</a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 md:px-0">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold neon-text mb-8 text-center">About Me</h2>
+            <p class="text-lg text-gray-300 mb-6">
+                As a passionate frontend developer, I specialize in creating immersive and responsive web experiences. With a keen eye for design and a love for cutting-edge technologies, I bring ideas to life in the digital realm.
+            </p>
+            <p class="text-lg text-gray-300 mb-6">
+                My journey in web development started years ago, and I've since honed my skills in modern frameworks and tools to build futuristic interfaces that push the boundaries of what's possible on the web.
+            </p>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-4 md:px-0 bg-black bg-opacity-50">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold neon-text mb-8 text-center">Skills</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div class="neon-border p-6 rounded-lg text-center">
+                    <h3 class="text-2xl font-bold mb-2">HTML5 & CSS3</h3>
+                    <p class="text-gray-400">Expert in semantic markup and advanced styling techniques.</p>
+                </div>
+                <div class="neon-border p-6 rounded-lg text-center">
+                    <h3 class="text-2xl font-bold mb-2">JavaScript & React</h3>
+                    <p class="text-gray-400">Building dynamic, interactive applications.</p>
+                </div>
+                <div class="neon-border p-6 rounded-lg text-center">
+                    <h3 class="text-2xl font-bold mb-2">Tailwind CSS</h3>
+                    <p class="text-gray-400">Rapid prototyping with utility-first CSS.</p>
+                </div>
+                <div class="neon-border p-6 rounded-lg text-center">
+                    <h3 class="text-2xl font-bold mb-2">Responsive Design</h3>
+                    <p class="text-gray-400">Ensuring seamless experiences across devices.</p>
+                </div>
+                <!-- Add more skills as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4 md:px-0">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-4xl font-bold neon-text mb-8 text-center">Projects</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="neon-border rounded-lg overflow-hidden">
+                    <img src="https://via.placeholder.com/400x250?text=Project+1" alt="Project 1" class="w-full">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Crypto Mining Platform</h3>
+                        <p class="text-gray-400 mb-4">A responsive web app for cryptocurrency mining simulations.</p>
+                        <a href="#" class="text-cyan-400 hover:underline">View Project</a>
+                    </div>
+                </div>
+                <div class="neon-border rounded-lg overflow-hidden">
+                    <img src="https://via.placeholder.com/400x250?text=Project+2" alt="Project 2" class="w-full">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Login Page</h3>
+                        <p class="text-gray-400 mb-4">Modern login page interface with React and Tailwind.</p>
+                        <a href="login.html" class="text-cyan-400 hover:underline">View Project</a>
+                    </div>
+                </div>
+                <div class="neon-border rounded-lg overflow-hidden">
+                    <img src="https://via.placeholder.com/400x250?text=Project+3" alt="Project 3" class="w-full">
+                    <div class="p-6">
+                        <h3 class="text-2xl font-bold mb-2">Todo List App</h3>
+                        <p class="text-gray-400 mb-4">Efficient task management tool built with vanilla JS.</p>
+                        <a href="#" class="text-cyan-400 hover:underline">View Project</a>
+                    </div>
+                </div>
+                <!-- Add more projects as needed -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 md:px-0 bg-black bg-opacity-50">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-4xl font-bold neon-text mb-8 text-center">Contact Me</h2>
+            <form class="space-y-6">
+                <input type="text" placeholder="Your Name" class="w-full p-4 bg-gray-900 border border-gray-700 rounded-md text-white">
+                <input type="email" placeholder="Your Email" class="w-full p-4 bg-gray-900 border border-gray-700 rounded-md text-white">
+                <textarea placeholder="Your Message" rows="5" class="w-full p-4 bg-gray-900 border border-gray-700 rounded-md text-white"></textarea>
+                <button type="submit" class="w-full bg-transparent border-2 border-cyan-400 text-cyan-400 px-8 py-3 rounded-full font-bold hover:neon-border transition">Send Message</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-6 text-center bg-black bg-opacity-80">
+        <p>&copy; 2025 Ndubuisi Truth Tonna. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Particles effect
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.classList.add('particle');
+            particle.style.left = `${Math.random() * 100}%`;
+            particle.style.top = `${Math.random() * 100}%`;
+            particle.style.animationDelay = `${Math.random() * 10}s`;
+            particle.style.animationDuration = `${5 + Math.random() * 10}s`;
+            particlesContainer.appendChild(particle);
+        }
+
+        // Form submission (placeholder)
+        const form = document.querySelector('form');
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Message sent! (This is a demo)');
+            form.reset();
+        });
+    </script>
+</body>
+</html>  
