@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crypto Mining Simulator</title>
+    <!-- Bootstrap CDN for responsiveness -->
+     <link rel="stylesheet" href="index.html">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Arial', sans-serif;
+        }
+        .container {
+            max-width: 800px;
+            margin-top: 50px;
+        }
+        .mining-status {
+            background-color: #ffffff;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            height: 20px;
+            background-color: #007bff;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .log {
+            height: 200px;
+            overflow-y: auto;
+            background-color: #e9ecef;
+            padding: 10px;
+            border-radius: 8px;
+            font-size: 0.9em;
+        }
+        .log p {
+            margin: 0;
+            padding: 5px 0;
+            border-bottom: 1px solid #dee2e6;
+        }
+        .log p:last-child {
+            border-bottom: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="text-center mb-4">Cryptocurrency Mining Simulator</h1>
+        <p class="text-center text-muted mb-5">Simulate mining blocks in a simplified blockchain. Adjust difficulty and hash rate to see how it affects mining time.</p>
+        
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label for="difficulty" class="form-label">Difficulty Level (leading zeros in hash):</label>
+                <select id="difficulty" class="form-select">
+                    <option value="2">Easy (2 zeros)</option>
+                    <option value="3" selected>Medium (3 zeros)</option>
+                    <option value="4">Hard (4 zeros)</option>
+                    <option value="5">Very Hard (5 zeros)</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="hashRate" class="form-label">Simulated Hash Rate (hashes/second):</label>
+                <input type="range" class="form-range" id="hashRate" min="100" max="10000" step="100" value="1000">
+                <span id="hashRateValue" class="d-block text-center">1000</span>
+            </div>
+        </div>
+        
+        <div class="text-center mb-4">
+            <button id="startMining" class="btn btn-primary btn-lg">Start Mining</button>
+            <button id="stopMining" class="btn btn-danger btn-lg" disabled>Stop Mining</button>
+        </div>
+        
+        <div class="mining-status">
+            <h4>Mining Status</h4>
+            <p>Blocks Mined: <span id="blocksMined">0</span></p>
+            <p>Total Reward: <span id="totalReward">0</span> SimCoins</p>
+            <p>Current Hash Rate: <span id="currentHashRate">0</span> hashes/sec</p>
+            <p>Hashes Computed: <span id="hashesComputed">0</span></p>
+            <div class="mt-3">
+                <label>Progress to Next Block:</label>
+                <div class="progress mt-1">
+                    <div id="progressBar" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="log">
+            <h4>Mining Log</h4>
+            <div id="logEntries"></div>
+        </div>
+    </div>
+
+    <script>
+        // Simple hash function for simulation (not real crypto hash)
+        function simpleHash(input) {
+            let hash = 0;
+            for (let i = 0; i < input.length; i++) {
+                const char = input.charCodeAt(i);
+                hash = ((hash << 5) - hash) + char;
+                hash = hash & hash; // Convert to 32bit integer
+            }
+            return Math.abs(hash).toString(16).padStart(8, '0'); // Return as hex string
+        }
+
+        // Variables
+        let mining = false;
+        let worker = null;
+        let blocksMined = 0;
+        let totalReward = 0;
+        let hashesComputed = 0;
+        let currentBlock = 1;
+        let difficulty = 3; // Default
+        let hashRate = 1000; // Default hashes per second
+        let intervalId = null;
+
+        // Update difficulty and hash rate displays
+        document.getElementById('difficulty').addEventListener('change', (e) => {
+            difficulty = parseInt(e.target.value);
+            logMessage(`Difficulty changed to ${difficulty} leading zeros.`);
+        });
+
+        document.getElementById('hashRate').addEventListener('input', (e) => {
+            hashRate = parseInt(e.target.value);
+            document.getElementById('hashRateValue').textContent = hashRate;
+            document.getElementById('currentHashRate').textContent = hashRate;
+            logMessage(`Hash rate adjusted to ${hashRate} hashes/sec.`);
+        });
+
+        // Start mining
+        document.getElementById('startMining').addEventListener('click', () => {
+            if (!mining) {
+                mining = true;
+                document.getElementById('startMining').disabled = true;
+                document.getElementById('stopMining').disabled = false;
+                logMessage('Mining started...');
+                startSimulation();
+            }
+        });
+
+        // Stop mining
+        document.getElementById('stopMining').addEventListener('click', () => {
+            if (mining) {
+                mining = false;
+                document.getElementById('startMining').disabled = false;
+                document.getElementById('stopMining').disabled = true;
+                logMessage('Mining stopped.');
+                clearInterval(intervalId);
+            }
+        });
+
+        // Simulate mining with setInterval (approximating hash rate)
+        function startSimulation() {
+            const delay = 1000 / hashRate; // Approximate time per hash in ms
+            let nonce = 0;
+            const blockData = `Block ${currentBlock} data`; // Simulated block data
+
+            intervalId = setInterval(() => {
+                if (!mining) return;
+
+                // Simulate hashing
+                const hashInput = blockData + nonce;
+                const hash = simpleHash(hashInput);
+                hashesComputed++;
+                nonce++;
+
+                // Update displays
+                document.getElementById('hashesComputed').textContent = hashesComputed;
+                document.getElementById('currentHashRate').textContent = hashRate;
+
+                // Check if hash meets difficulty (starts with difficulty zeros)
+                if (hash.startsWith('0'.repeat(difficulty))) {
+                    blocksMined++;
+                    const reward = 10; // Simulated reward per block
+                    totalReward += reward;
+                    logMessage(`Block ${currentBlock} mined! Hash: ${hash} | Reward: ${reward} SimCoins`);
+                    document.getElementById('blocksMined').textContent = blocksMined;
+                    document.getElementById('totalReward').textContent = totalReward;
+                    currentBlock++;
+                    nonce = 0; // Reset for next block
+
+                    // Reset progress bar
+                    document.getElementById('progressBar').style.width = '0%';
+                } else {
+                    // Update progress bar (simulated progress based on hashes)
+                    const progress = (nonce / (Math.pow(16, difficulty))) * 100; // Rough estimate
+                    document.getElementById('progressBar').style.width = `${Math.min(progress, 100)}%`;
+                }
+            }, delay * 10); // Multiply delay to make it feasible (simulation adjustment)
+        }
+
+        // Log message function
+        function logMessage(message) {
+            const logEntries = document.getElementById('logEntries');
+            const p = document.createElement('p');
+            p.textContent = `[${new Date().toLocaleTimeString()}] ${message}`;
+            logEntries.appendChild(p);
+            logEntries.scrollTop = logEntries.scrollHeight;
+        }
+    </script>
+</body>
+</html>
